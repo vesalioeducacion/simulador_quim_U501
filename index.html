@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QUÍMICA & BIOQUÍMICA - Carbohidratos y Estereoquímica Biomédica (UCCuyo)</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- KaTeX for ultra-fast LaTeX chemistry and formula rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts: Outfit & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: #f7f9f6;
+      color: #1e293b;
+    }
+
+    /* Paleta Institucional Verde Oliva UCCuyo */
+    .text-accent { color: #436600; }
+    .bg-accent { background-color: #436600; }
+    .bg-accent-hover:hover { background-color: #324d00; }
+    .bg-accent-light { background-color: #f1f6eb; }
+    .border-accent { border-color: #436600; }
+
+    .text-primary { color: #436600; }
+    .bg-primary { background-color: #436600; }
+    .bg-primary-dark { background-color: #324d00; }
+    .border-primary { border-color: #436600; }
+
+    .focus-accent:focus {
+      border-color: #436600;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(67, 102, 0, 0.2);
+    }
+
+    .code-font {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    /* Custom scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* SVG molecule transitions */
+    .fischer-bond {
+      stroke: #334155;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+    }
+    .chiral-highlight {
+      animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulse-ring {
+      0%, 100% { opacity: 0.9; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.15); }
+    }
+  </style></head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-accent-light selection:text-accent">
+
+  <!-- Cabecera Institucional UCCuyo -->
+  <header class="bg-white border-b border-gray-200 shadow-xs sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-3.5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-accent flex items-center justify-center text-white font-bold text-lg shadow-sm">
+          Q
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-gray-800 tracking-wide uppercase">QUÍMICA</h1>
+          <p class="text-xs text-gray-500 font-semibold">PreMédico (Facultad de Cs. Médicas - UCCuyo)</p>
+        </div>
+      </div>
+      <!-- Botón Guía de Uso -->
+      <button onclick="openTutorial()" class="flex items-center gap-1.5 px-3 py-1.5 bg-accent text-white text-xs font-semibold rounded-lg shadow-sm hover:opacity-90 transition">
+        <i class="fa-solid fa-graduation-cap"></i>
+        Guía de Uso
+      </button>
+    </div>
+  </header>
+
+  <!-- Contenido Principal con Menú Lateral -->
+  <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 flex flex-col lg:flex-row gap-6">
+    
+    <!-- Menú de Navegación Lateral -->
+    <nav class="w-full lg:w-64 flex flex-row lg:flex-col gap-2 bg-white p-3 rounded-2xl shadow-sm border border-gray-100 overflow-x-auto lg:overflow-x-visible whitespace-nowrap lg:whitespace-normal sticky top-20 h-fit shrink-0">
+      <button onclick="switchTab('mod1')" id="nav-mod1" class="tab-btn bg-accent text-white flex-1 lg:flex-none text-left py-2.5 px-3.5 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center gap-2.5 shadow-sm">
+        <i class="fa-solid fa-cubes text-sm w-4 text-center"></i>
+        <span>1. Fundamentos & Clasificación</span>
+      </button>
+      <button onclick="switchTab('mod2')" id="nav-mod2" class="tab-btn text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-3.5 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-2.5">
+        <i class="fa-solid fa-compass text-sm w-4 text-center"></i>
+        <span>2. Estereoquímica & Polarímetro</span>
+      </button>
+      <button onclick="switchTab('mod3')" id="nav-mod3" class="tab-btn text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-3.5 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-2.5">
+        <i class="fa-solid fa-rotate text-sm w-4 text-center"></i>
+        <span>3. Ciclación & Mutarrotación</span>
+      </button>
+      <button onclick="switchTab('mod4')" id="nav-mod4" class="tab-btn text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-3.5 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-2.5">
+        <i class="fa-solid fa-flask text-sm w-4 text-center"></i>
+        <span>4. Monosacáridos Clave</span>
+      </button>
+      <button onclick="switchTab('mod5')" id="nav-mod5" class="tab-btn text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-3.5 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-2.5">
+        <i class="fa-solid fa-link text-sm w-4 text-center"></i>
+        <span>5. Disacáridos Fisiológicos</span>
+      </button>
+    </nav>
+
+    <!-- Contenedor Dinámico de Módulos -->
+    <div class="flex-1 w-full space-y-6 min-w-0">
+
+
+    <!-- ========================================== -->
+    <!-- MODULE 1: FUNDAMENTOS Y CLASIFICACIÓN GENERAL -->
+    <!-- ========================================== -->
+    <section id="module-mod1" class="module-section space-y-8">
+      
+      <!-- Banner Didáctico UCCuyo -->
+      <div class="bg-white rounded-2xl p-6 sm:p-8 text-gray-700 shadow-sm relative overflow-hidden border border-gray-200">
+        <div class="absolute right-0 top-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-light text-accent text-xs font-semibold uppercase tracking-wider mb-3 border border-accent/20">
+            <i class="fa-solid fa-book-bookmark"></i> Marco Teórico según Wolfe & Lehninger
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight mb-3">
+            Definición Química Rigurosa y Clasificación
+          </h2>
+          <p class="text-gray-700 text-sm sm:text-base leading-relaxed">
+            Desde el rigor de la química médica y biofísica, los carbohidratos no son simplemente "hidratos de carbono" empíricos $(C_n(H_2O)_n)$, sino 
+            <strong class="text-amber-300">polihidroxialdehídos</strong> o <strong class="text-amber-300">polihidroxicetonas</strong> (según Drew H. Wolfe) o sustancias poliméricas complejas que al sufrir hidrólisis química o enzimática los liberan.
+          </p>
+        </div>
+      </div>
+
+      <!-- Functional Distinction: Aldosas vs Cetosas -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Aldosas Card -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:border-blue-400 transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-md text-xs font-bold uppercase bg-blue-50 text-accent border border-blue-200">
+                Grupo Carbonilo Terminal
+              </span>
+              <span class="text-xs font-mono font-bold text-slate-400">Carbono 1 ($\text{C}1$)</span>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+              <i class="fa-solid fa-code-branch text-accent"></i> Aldosas
+            </h3>
+            <p class="text-sm text-gray-500 mt-2">
+              Contienen el grupo carbonilo en el extremo de la cadena carbonada, formando un <strong class="text-gray-700">grupo aldehído ($-\text{CHO}$)</strong> en el carbono 1 ($\text{C}1$).
+            </p>
+            <div class="mt-4 p-4 rounded-xl bg-gray-50 border border-gray-200 font-mono text-xs text-gray-600">
+              <div class="text-center font-bold text-blue-800 mb-1">Estructura Representativa: D-Glucosa</div>
+              <div class="text-center text-gray-500">$\text{C}1\text{HO}-(\text{C}2\text{HOH})-(\text{C}3\text{HOH})-(\text{C}4\text{HOH})-(\text{C}5\text{HOH})-\text{C}6\text{H}_2\text{OH}$</div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-slate-500">
+            <span>Ejemplos biológicos clave:</span>
+            <span class="font-semibold text-gray-600">Gliceraldehído, Ribosa, D-Glucosa</span>
+          </div>
+        </div>
+
+        <!-- Cetosas Card -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:border-amber-400 transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-md text-xs font-bold uppercase bg-amber-50 text-amber-700 border border-amber-200">
+                Grupo Carbonilo Intermedio
+              </span>
+              <span class="text-xs font-mono font-bold text-slate-400">Carbono 2 ($\text{C}2$)</span>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+              <i class="fa-solid fa-layer-group text-amber-700"></i> Cetosas
+            </h3>
+            <p class="text-sm text-gray-500 mt-2">
+              El grupo carbonilo se localiza en una posición no terminal, típicamente formando un <strong class="text-gray-700">grupo cetona ($-\text{C}=\text{O}$)</strong> en el carbono 2 ($\text{C}2$).
+            </p>
+            <div class="mt-4 p-4 rounded-xl bg-amber-50/50 border border-amber-200 font-mono text-xs text-gray-600">
+              <div class="text-center font-bold text-amber-800 mb-1">Estructura Representativa: D-Fructosa</div>
+              <div class="text-center text-gray-500">$\text{C}1\text{H}_2\text{OH}-(\text{C}2=\text{O})-(\text{C}3\text{HOH})-(\text{C}4\text{HOH})-(\text{C}5\text{HOH})-\text{C}6\text{H}_2\text{OH}$</div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-slate-500">
+            <span>Ejemplos biológicos clave:</span>
+            <span class="font-semibold text-gray-600">Dihidroxiacetona, D-Fructosa</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Classification by Complexity & Carbon Length -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+        <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-sitemap text-accent"></i> Jerarquía por Grado de Polimerización y Longitud de Cadena
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Monosacáridos -->
+          <div class="p-5 rounded-xl bg-gray-50 border border-gray-200 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <h4 class="font-bold text-gray-700">1. Monosacáridos</h4>
+                <span class="text-xs bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded">1 Unidad</span>
+              </div>
+              <p class="text-xs text-gray-500 leading-relaxed">
+                Glúcidos simples que no pueden hidrolizarse en entidades de menor número de átomos de carbono bajo condiciones enzimáticas suaves.
+              </p>
+              <div class="mt-4 space-y-2 text-xs">
+                <div class="p-2 bg-white rounded border border-gray-200">
+                  <span class="font-bold text-accent">Triosas (3C):</span>
+                  <div class="text-gray-500">Gliceraldehído y Dihidroxiacetona. Intermediarios centrales de la glicólisis y la gluconeogénesis.</div>
+                </div>
+                <div class="p-2 bg-white rounded border border-gray-200">
+                  <span class="font-bold text-accent">Pentosas (5C):</span>
+                  <div class="text-gray-500">D-Ribosa ($\text{ARN}$, $\text{ATP}$, $\text{NAD}^+$) y 2-Desoxi-D-ribosa ($\text{ADN}$).</div>
+                </div>
+                <div class="p-2 bg-white rounded border border-gray-200">
+                  <span class="font-bold text-accent">Hexosas (6C):</span>
+                  <div class="text-gray-500">D-Glucosa, D-Galactosa, D-Manosa (aldohexosas) y D-Fructosa (cetohexosa).</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Oligosacáridos -->
+          <div class="p-5 rounded-xl bg-gray-50 border border-gray-200 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <h4 class="font-bold text-gray-700">2. Oligosacáridos</h4>
+                <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded">2 a 10 Unidades</span>
+              </div>
+              <p class="text-xs text-gray-500 leading-relaxed">
+                Moléculas conformadas por la unión covalente mediante enlace $O$-glucosídico de 2 a 10 residuos monoméricos.
+              </p>
+              <div class="mt-4 space-y-2 text-xs">
+                <div class="p-2 bg-white rounded border border-gray-200">
+                  <span class="font-bold text-amber-700">Disacáridos (2C):</span>
+                  <div class="text-gray-500">Lactosa (leche), Sacarosa (mesa), Maltosa (digestión del almidón). Relevancia clínica en absorción intestinal.</div>
+                </div>
+                <div class="p-2 bg-white rounded border border-gray-200">
+                  <span class="font-bold text-amber-700">Glucoconjugados:</span>
+                  <div class="text-gray-500">Oligosacáridos de membrana celular acoplados a lípidos y proteínas (determinantes antigénicos AB0 eritrocitarios).</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Polisacáridos -->
+          <div class="p-5 rounded-xl bg-gray-50 border border-gray-200 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <h4 class="font-bold text-gray-700">3. Polisacáridos</h4>
+                <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">&gt; 10 Unidades</span>
+              </div>
+              <p class="text-xs text-gray-500 leading-relaxed">
+                Polímeros macromoleculares de alta masa con funciones críticas de almacenamiento de energía y arquitectura de tejidos.
+              </p>
+              <div class="mt-4 space-y-2 text-xs">
+                <div class="p-2 bg-white rounded border border-gray-200">
+                  <span class="font-bold text-emerald-700">Glucógeno:</span>
+                  <div class="text-gray-500">Homopolisacárido ramificado de reserva en hepatocitos y miocitos. Ramificaciones $\alpha(1\to 6)$.</div>
+                </div>
+                <div class="p-2 bg-white rounded border border-gray-200">
+                  <span class="font-bold text-emerald-700">Almidón y Celulosa:</span>
+                  <div class="text-gray-500">Almidón vegetal (amilosa y amilopectina). Celulosa $\beta(1\to 4)$, indigerible por ausencia de celulasa humana (fibra dietética).</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- MODULE 2: ESTEREOQUÍMICA Y ACTIVIDAD ÓPTICA -->
+    <!-- ========================================== -->
+    <section id="module-mod2" class="module-section hidden space-y-8">
+      
+      <!-- Introducción Teórica de Estereoisomería -->
+      <!-- Header Card -->
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-accent bg-accent-light px-2.5 py-1 rounded-md border border-accent/20">Módulo 2</span>
+            <h2 class="text-xl font-bold text-gray-800 mt-1">Estereoquímica, Actividad Óptica y Proyecciones de Fischer</h2>
+          </div>
+          <span class="text-xs bg-slate-100 text-gray-600 font-semibold px-3 py-1.5 rounded-xl border border-gray-200">
+            Regla de van 't Hoff: $2^n$ estereoisómeros
+          </span>
+        </div>
+        <p class="text-xs text-gray-500 leading-relaxed">
+          Estudio de los carbonos quirales asimétricos, asignación rigurosa de la serie D/L en proyecciones de Fischer según el centro quiral más alejado del carbonilo, diferenciación neta entre enantiómeros, diastereoisómeros y epímeros, y determinación experimental en el polarímetro óptico.
+        </p>
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-100 pb-3">
+          <h3 class="text-sm font-bold text-gray-800 uppercase tracking-wider">Fundamentos de Quiralidad e Isomería Espacial</h3>
+          <span class="text-xs text-gray-500 font-mono bg-gray-50 px-2.5 py-1 rounded-lg border border-gray-200">$n = \text{número de carbonos asimétricos}$</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Regla D / L -->
+          <div class="p-5 rounded-xl bg-blue-50/50 border border-blue-100">
+            <h4 class="font-bold text-accent flex items-center gap-2 mb-2">
+              <i class="fa-solid fa-compass"></i> Convención D y L de Fischer
+            </h4>
+            <p class="text-xs text-gray-600 leading-relaxed">
+              Determinada por la orientación espacial del grupo hidroxilo ($-\text{OH}$) en el <strong>carbono quiral o asimétrico más distante del grupo carbonilo</strong>:
+            </p>
+            <ul class="mt-3 text-xs space-y-2 text-gray-500">
+              <li class="flex items-start gap-1.5">
+                <span class="text-blue-600 font-bold">•</span>
+                <span><strong>Serie D:</strong> $-\text{OH}$ orientado a la <em>DERECHA</em> en Fischer (ej. $\text{C}5$ en D-glucosa).</span>
+              </li>
+              <li class="flex items-start gap-1.5">
+                <span class="text-blue-600 font-bold">•</span>
+                <span><strong>Serie L:</strong> $-\text{OH}$ orientado a la <em>IZQUIERDA</em> en Fischer.</span>
+              </li>
+            </ul>
+            <div class="mt-4 p-2.5 bg-white rounded-lg border border-blue-200 text-[11px] text-blue-900 leading-tight">
+              <strong>Estereoespecificidad Humana:</strong> Los transportadores facilitados ($\text{GLUT}$) y enzimas como la hexoquinasa son estrictamente estereoespecíficos por la <strong>D-glucosa</strong>. La <strong>L-glucosa</strong> es metabólicamente inerte en el ser humano.
+            </div>
+          </div>
+
+          <!-- Enantiómeros vs Diastereoisómeros -->
+          <div class="p-5 rounded-xl bg-gray-50 border border-gray-200">
+            <h4 class="font-bold text-gray-700 flex items-center gap-2 mb-2">
+              <i class="fa-solid fa-shapes"></i> Relaciones Isoméricas
+            </h4>
+            <div class="text-xs space-y-3 text-gray-600">
+              <div>
+                <strong class="text-gray-800 block">Enantiómeros:</strong>
+                Imágenes especulares no superponibles. Tienen invertidos <em>todos</em> los carbonos quirales (ej. D-glucosa y L-glucosa).
+              </div>
+              <div>
+                <strong class="text-gray-800 block">Diastereoisómeros:</strong>
+                Estereoisómeros que <em>no</em> son imágenes especulares mutuas. Difieren en uno o más centros quirales sin llegar a ser el espejo.
+              </div>
+            </div>
+          </div>
+
+          <!-- Epímeros y Comparador -->
+          <div class="p-5 rounded-xl bg-amber-50/50 border border-amber-200">
+            <h4 class="font-bold text-amber-900 flex items-center gap-2 mb-2">
+              <i class="fa-solid fa-shuffle"></i> Epímeros de Relevancia Clínica
+            </h4>
+            <p class="text-xs text-gray-600 leading-relaxed mb-3">
+              Diastereoisómeros que difieren en la configuración de <strong>un único carbono quiral</strong>.
+            </p>
+            <div class="p-3 bg-white rounded-lg border border-amber-300 text-xs">
+              <div class="font-bold text-amber-900 mb-1">D-Glucosa vs. D-Galactosa (Epímeros en $\text{C}4$):</div>
+              <p class="text-gray-500 text-[11px]">
+                En D-glucosa, el $-\text{OH}$ en $\text{C}4$ mira a la <em>derecha</em>; en D-galactosa, mira a la <em>izquierda</em>. Su interconversión fisiológica requiere la enzima hepática <strong>UDP-glucosa 4-epimerasa</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISOR DINÁMICO FISCHER: D-GLUCOSA VS D-GALACTOSA (EPÍMEROS EN C4) -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-4 border-b border-gray-100 gap-3">
+          <div>
+            <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+              <i class="fa-solid fa-microscope text-accent"></i> Comparador Interactivo de Epímeros en Proyección de Fischer
+            </h3>
+            <p class="text-xs text-slate-500">Alterna la configuración estereoquímica para visualizar la inversión en $\text{C}4$ y el determinante de la Serie D en $\text{C}5$.</p>
+          </div>
+          <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl text-xs font-medium">
+            <button onclick="setFischerMolecule('glucose')" id="btn-fischer-glu" class="px-3 py-1.5 rounded-lg bg-accent text-white shadow transition-all">
+              D-Glucosa
+            </button>
+            <button onclick="setFischerMolecule('galactose')" id="btn-fischer-gal" class="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-white transition-all">
+              D-Galactosa (Epímero $\text{C}4$)
+            </button>
+            <button onclick="setFischerMolecule('lglucose')" id="btn-fischer-lglu" class="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-white transition-all">
+              L-Glucosa (Enantiómero)
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <!-- Columna Izquierda: Esquema SVG Fischer -->
+          <div class="lg:col-span-5 flex justify-center py-4 bg-gray-50 rounded-xl border border-gray-200">
+            <svg id="fischer-svg" width="280" height="380" viewBox="0 0 280 380" class="select-none font-sans"></svg>
+          </div>
+
+          <!-- Columna Derecha: Análisis Clínico y Bioquímico del Isómero -->
+          <div class="lg:col-span-7 space-y-4">
+            <div id="fischer-analysis-card" class="p-5 rounded-xl border border-gray-200 bg-white">
+              <!-- Dynamically populated via JS -->
+            </div>
+
+            <!-- Warning Box: Error Conceptual D/L vs +/- -->
+            <div class="p-4 rounded-xl bg-rose-50 border border-rose-200 flex gap-3 items-start">
+              <div class="w-8 h-8 rounded-lg bg-rose-500 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              </div>
+              <div class="text-xs text-gray-600 space-y-1">
+                <div class="font-bold text-rose-900 text-sm">Alerta de Examen de Ingreso: Trampa Conceptual Común</div>
+                <p>
+                  <strong>D y L NO equivalen a $(+)$ y $(-)$</strong>. Las letras D/L son una <em>notación estructural estática</em> referenciada al D-gliceraldehído. Los signos $(+)$ y $(-)$ corresponden a la <em>rotación óptica experimental</em> en un polarímetro.
+                </p>
+                <div class="pt-1 text-gray-700 font-mono text-[11px]">
+                  • <strong>D-Glucosa</strong> es dextrógira $\to$ <strong>D-(+)-glucosa</strong> ("Dextrosa").<br>
+                  • <strong>D-Fructosa</strong> es levógira $\to$ <strong>D-(-)-fructosa</strong> ("Levulosa").
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LABORATORIO VIRTUAL DEL POLARÍMETRO -->
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-gray-100 gap-4">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xs font-bold uppercase tracking-wider text-accent bg-accent-light px-2.5 py-1 rounded-md border border-accent/20">
+                <i class="fa-solid fa-flask-vial"></i> Simulación Biofísica
+              </span>
+            </div>
+            <h3 class="text-lg font-bold text-gray-800">
+              Laboratorio Virtual del Polarímetro y Actividad Óptica
+            </h3>
+            <p class="text-xs text-gray-500 mt-0.5">
+              Trayectoria: Luz no polarizada $\to$ Polarizador Nicol $\to$ Haz polarizado plano $\to$ Tubo con solución quiral ($1\,\text{dm}$) $\to$ Analizador rotatorio $\to$ Ocular.
+            </p>
+          </div>
+          
+          <!-- Sample Selector -->
+          <div class="flex flex-col sm:items-end gap-1">
+            <span class="text-xs text-gray-600 font-semibold">Sustancia en Tubo ($1\,\text{dm}$):</span>
+            <select id="polarimeter-sample-select" onchange="changePolarimeterSample(this.value)" class="bg-gray-50 text-gray-800 border border-gray-200 text-xs rounded-xl px-3 py-2 font-semibold focus-accent">
+              <option value="d-glucose">D-(+)-Glucosa pura (Dextrosa: $+52.7^\circ$ eq)</option>
+              <option value="d-fructose">D-(-)-Fructosa pura (Levulosa: $-92.4^\circ$)</option>
+              <option value="sucrose">Sacarosa pura ($+66.5^\circ$)</option>
+              <option value="invert-sugar">Azúcar Invertido hidrolizado ($-19.7^\circ$)</option>
+              <option value="water">Agua destilada / Solución aquiral ($0.0^\circ$)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Polarimeter Visual Simulation Area -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <!-- Optical Bench Graphic (SVG) in dark canvas container matching U4-02 canvas style -->
+          <div class="lg:col-span-8 bg-slate-900 p-4 rounded-xl shadow-inner relative overflow-hidden border border-slate-800">
+            <div class="text-[11px] font-mono text-slate-300 mb-2 flex justify-between">
+              <span class="font-bold text-accent-light">BANCO ÓPTICO EXPERIMENTAL</span>
+              <span id="beam-status" class="text-amber-400 font-bold">Haz Activo: Luz $\text{Na}$ ($589\,\text{nm}$)</span>
+            </div>
+            
+            <svg id="polarimeter-bench-svg" width="100%" height="220" viewBox="0 0 650 220" class="w-full h-auto select-none"></svg>
+
+            <div class="mt-3 flex justify-between text-[11px] text-slate-400 font-mono px-2">
+              <span>[1] Fuente de Luz</span>
+              <span>[2] Polarizador</span>
+              <span>[3] Tubo de Muestra</span>
+              <span>[4] Analizador Rotatorio</span>
+              <span>[5] Ocular / Sensor</span>
+            </div>
+          </div>
+
+          <!-- Eyepiece View & Angle Controller -->
+          <div class="lg:col-span-4 bg-gray-50 p-5 rounded-xl border border-gray-200 flex flex-col items-center">
+            <div class="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 text-center">
+              Campo Visual del Ocular
+            </div>
+            
+            <!-- Circular Eyepiece Aperture -->
+            <div class="relative w-36 h-36 rounded-full border-4 border-gray-400 bg-slate-950 flex items-center justify-center overflow-hidden shadow-inner my-2">
+              <div id="eyepiece-light-circle" class="w-full h-full rounded-full transition-all duration-75 flex items-center justify-center" style="background-color: rgba(251, 191, 36, 0.1);">
+                <!-- Crosshair reticle -->
+                <div class="absolute w-full h-[1px] bg-gray-500/40"></div>
+                <div class="absolute h-full w-[1px] bg-gray-500/40"></div>
+                <!-- Slit indicator for optical transmission -->
+                <div id="eyepiece-slit" class="w-1.5 h-28 bg-amber-300/80 rounded transition-transform duration-75" style="transform: rotate(0deg);"></div>
+              </div>
+              <div class="absolute bottom-1 text-[9px] font-mono text-slate-300 bg-black/70 px-1 rounded font-bold">EXTINCIÓN ÓPTICA</div>
+            </div>
+
+            <!-- Angle Slider & Readout -->
+            <div class="w-full mt-3 space-y-2.5">
+              <div class="flex items-center justify-between text-xs font-mono">
+                <span class="text-gray-600 font-semibold">Ángulo Analizador ($\alpha$):</span>
+                <span id="analyzer-angle-display" class="font-bold text-accent text-sm">$+0.0^\circ$</span>
+              </div>
+              
+              <input type="range" id="analyzer-slider" min="-120" max="120" step="0.5" value="0" oninput="updateAnalyzerAngle(this.value)" class="w-full accent-accent cursor-pointer h-2 bg-gray-200 rounded-lg">
+
+              <div class="flex justify-between text-[10px] text-gray-500 font-mono font-medium">
+                <span>$-120^\circ$ (Levógiro)</span>
+                <span>$0^\circ$</span>
+                <span>$+120^\circ$ (Dextrógiro)</span>
+              </div>
+
+              <!-- Align Button (Assist) -->
+              <button onclick="autoZeroPolarimeter()" class="w-full mt-2 py-2 px-3 bg-accent text-white hover:bg-accent-hover rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition shadow-sm">
+                <i class="fa-solid fa-crosshairs"></i> Calibrar a Máxima Transmisión
+              </button>
+            </div>
+
+            <!-- Result Box -->
+            <div id="polarimeter-diagnostics" class="w-full mt-3 p-3 rounded-xl bg-white border border-gray-200 text-xs text-gray-700 space-y-1 shadow-xs">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- MODULE 3: CICLACIÓN Y MUTARROTACIÓN -->
+    <!-- ========================================== -->
+    <section id="module-mod3" class="module-section hidden space-y-8">
+      
+      <!-- Ciclación Intramolecular y Haworth -->
+      <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-200">
+        <div class="max-w-3xl mb-6">
+          <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded border border-emerald-200">
+            Termodinámica en Solución Acuosa
+          </span>
+          <h2 class="text-2xl font-bold text-gray-800 mt-2">
+            Mecanismo de Ciclación Intramolecular y Anomería
+          </h2>
+          <p class="text-sm text-gray-500 mt-2 leading-relaxed">
+            En solución acuosa fisiológica, las aldohexosas y cetohexosas existen en <strong>más del $99\%$ en formas cíclicas hemiacetálicas o hemicetálicas</strong>. La cadena abierta lineal es termodinámicamente desfavorable y representa únicamente un intermediario transitorio de muy baja concentración ($&lt;0.1\%$).
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-5 rounded-xl bg-gray-50 border border-gray-200">
+            <h4 class="font-bold text-gray-800 flex items-center gap-2 mb-2 text-sm">
+              <i class="fa-solid fa-arrows-spin text-accent"></i> Adición Nucleofílica Intramolecular
+            </h4>
+            <p class="text-xs text-gray-500 leading-relaxed">
+              El par de electrones no enlazantes del oxígeno del grupo $-\text{OH}$ en $\text{C}5$ realiza un ataque nucleofílico sobre el carbono carbonílico electrofílico en $\text{C}1$ ($sp^2$, trigonal plano).
+            </p>
+            <div class="mt-3 text-xs bg-white p-2.5 rounded border border-gray-200 font-mono text-gray-600">
+              Aldehído + Alcohol $\to$ <strong class="text-blue-700">Hemiacetal Cíclico</strong>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl bg-gray-50 border border-gray-200">
+            <h4 class="font-bold text-gray-800 flex items-center gap-2 mb-2 text-sm">
+              <i class="fa-solid fa-circle-notch text-amber-700"></i> El Carbono Anomérico ($\text{C}1$)
+            </h4>
+            <p class="text-xs text-gray-500 leading-relaxed">
+              Al cerrarse el ciclo, el $\text{C}1$ pasa de hibridación $sp^2$ (aquiral) a $sp^3$ (quiral), convirtiéndose en un nuevo centro asimétrico denominado <strong>carbono anomérico</strong>.
+            </p>
+            <div class="mt-3 text-xs bg-white p-2.5 rounded border border-gray-200 text-gray-600">
+              Genera dos diastereoisómeros específicos llamados <strong>anómeros</strong> ($\alpha$ y $\beta$).
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl bg-gray-50 border border-gray-200">
+            <h4 class="font-bold text-gray-800 flex items-center gap-2 mb-2 text-sm">
+              <i class="fa-solid fa-ring text-emeraldcell"></i> Regla de Haworth: $\alpha$ vs $\beta$
+            </h4>
+            <p class="text-xs text-gray-500 leading-relaxed">
+              En las aldohexosas de la serie D con anillo de pirano:
+            </p>
+            <ul class="mt-2 text-xs space-y-1.5 text-gray-600">
+              <li>• <strong>Anómero $\alpha$:</strong> Grupo $-\text{OH}$ anomérico hacia <strong>ABAJO</strong> (trans respecto al $-\text{CH}_2\text{OH}$ de $\text{C}6$).</li>
+              <li>• <strong>Anómero $\beta$:</strong> Grupo $-\text{OH}$ anomérico hacia <strong>ARRIBA</strong> (cis respecto al $-\text{CH}_2\text{OH}$ de $\text{C}6$).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIMULADOR DINÁMICO DE MUTARROTACIÓN Y EQUILIBRIO EN TIEMPO REAL -->
+      <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-200">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-6 border-b border-gray-100 gap-3">
+          <div>
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded bg-blue-50 text-accent text-xs font-semibold mb-1 border border-blue-200">
+              Cinética Química en Disolución
+            </div>
+            <h3 class="text-xl font-bold text-gray-800">
+              Simulador de Mutarrotación de la D-Glucosa
+            </h3>
+            <p class="text-xs text-slate-500">
+              Evolución temporal del ángulo $[\alpha]_D$ desde cristales puros ($\alpha$ o $\beta$) hasta el equilibrio fisiológico dinámico.
+            </p>
+          </div>
+
+          <!-- Controls for Mutarotation -->
+          <div class="flex items-center gap-2 text-xs">
+            <button onclick="startMutarotation('alpha')" id="btn-muta-alpha" class="px-3.5 py-1.5 rounded-xl bg-accent text-white text-xs font-bold transition shadow-sm hover:opacity-90">
+              Iniciar desde $\alpha$-D-glucosa ($+112.2^\circ$)
+            </button>
+            <button onclick="startMutarotation('beta')" id="btn-muta-beta" class="px-3.5 py-2 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition shadow">
+              Iniciar desde $\beta$-D-glucosa ($+18.7^\circ$)
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <!-- Chemical Reaction Scheme Display -->
+          <div class="lg:col-span-7 bg-gray-50 p-6 rounded-xl border border-gray-200">
+            <div class="flex items-center justify-around text-center">
+              
+              <!-- Alpha State -->
+              <div id="muta-alpha-box" class="p-3 rounded-xl transition-all duration-300 w-36 bg-white border border-gray-200 shadow-sm">
+                <div class="text-xs font-bold text-accent mb-1">$\alpha$-D-Glucosa</div>
+                <div class="text-lg font-mono font-bold text-gray-700" id="muta-alpha-pct">36.0%</div>
+                <div class="text-[10px] text-slate-500">Cristal Puro: $[\alpha] = +112.2^\circ$</div>
+                <div class="text-[10px] text-blue-600 font-semibold mt-1">$-\text{OH}$ anomérico ABAJO</div>
+              </div>
+
+              <!-- Reversible Reaction Arrows -->
+              <div class="flex flex-col items-center justify-center px-2">
+                <i class="fa-solid fa-arrows-left-right text-slate-400 text-lg"></i>
+                <div class="text-[9px] font-mono text-slate-400 mt-1">Intermediario Lineal</div>
+                <div class="text-[9px] font-bold text-amber-600">&lt; 0.1%</div>
+              </div>
+
+              <!-- Beta State -->
+              <div id="muta-beta-box" class="p-3 rounded-xl transition-all duration-300 w-36 bg-white border border-gray-200 shadow-sm">
+                <div class="text-xs font-bold text-emerald-700 mb-1">$\beta$-D-Glucosa</div>
+                <div class="text-lg font-mono font-bold text-gray-700" id="muta-beta-pct">64.0%</div>
+                <div class="text-[10px] text-slate-500">Cristal Puro: $[\alpha] = +18.7^\circ$</div>
+                <div class="text-[10px] text-emerald-600 font-semibold mt-1">$-\text{OH}$ anomérico ARRIBA</div>
+              </div>
+            </div>
+
+            <!-- Kinetic Progress Bar -->
+            <div class="mt-6 space-y-2">
+              <div class="flex justify-between text-xs font-mono">
+                <span class="text-gray-500">Composición molecular en solución:</span>
+                <span class="font-bold text-gray-700" id="muta-ratio-label">$\alpha$: 36% | $\beta$: 64% (Equilibrio)</span>
+              </div>
+              <div class="h-4 w-full bg-slate-200 rounded-full overflow-hidden flex shadow-inner">
+                <div id="muta-bar-alpha" class="bg-accent h-full transition-all duration-150" style="width: 36%;"></div>
+                <div id="muta-bar-beta" class="bg-emerald-500 h-full transition-all duration-150" style="width: 64%;"></div>
+              </div>
+            </div>
+
+            <!-- Current Measured Specific Rotation -->
+            <div class="mt-6 p-4 rounded-xl bg-white border border-gray-200 flex items-center justify-between">
+              <div>
+                <span class="text-xs text-slate-500 block">Rotación Óptica Específica Medida $[\alpha]_D^{20}$:</span>
+                <span id="current-rotation-val" class="text-2xl font-bold font-mono text-gray-800">$+52.7^\circ$</span>
+                <span class="text-xs text-emerald-600 font-medium ml-2" id="current-equilibrium-status">(Estado de Equilibrio Termodinámico)</span>
+              </div>
+              <div class="w-12 h-12 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 text-xl">
+                <i class="fa-solid fa-stopwatch"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Biomedical & Biosensor Application Box -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="p-5 rounded-xl bg-blue-50/60 border border-blue-200">
+              <h4 class="font-bold text-accent text-sm flex items-center gap-2 mb-2">
+                <i class="fa-solid fa-notes-medical"></i> Relevancia Clínica: Glucómetros y Biosensores
+              </h4>
+              <p class="text-xs text-gray-600 leading-relaxed">
+                La enzima <strong>glucosa oxidasa ($\text{GOD}$)</strong>, ampliamente utilizada en tiras reactivas y sensores continuos de glucosa intersticial ($\text{FreeStyle Libre}$, etc.), es <strong>estrictamente estereoespecífica por la $\beta$-D-glucosa</strong>.
+              </p>
+              <div class="mt-3 p-3 bg-white rounded-lg border border-blue-200 text-xs text-gray-500 space-y-1">
+                <p>
+                  Si un paciente toma una muestra de sangre, la enzima oxidará selectivamente la forma $\beta$. La velocidad intrínseca de mutarrotación ($\alpha \leftrightarrow \beta$) en sangre evita que la medición se sature o subestime la glucemia total ($100\,\text{mg/dL}$ normoglucemia).
+                </p>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900">
+              <strong>¿Por qué predomina el anómero $\beta$ ($64\%$ vs $36\%$)?</strong> En conformación tridimensional de silla ($^4\text{C}_1$), la $\beta$-D-glucosa tiene <em>todos sus sustituyentes voluminosos ($-\text{OH}$ y $-\text{CH}_2\text{OH}$) en posiciones ecuatoriales</em>, minimizando la repulsión estérica y haciendo que sea la molécula biológica energéticamente más estable del universo vivo.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- MODULE 4: MONOSACÁRIDOS FISIOLÓGICOS -->
+    <!-- ========================================== -->
+    <section id="module-mod4" class="module-section hidden space-y-8">
+      
+      <!-- Header Card -->
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-accent bg-accent-light px-2.5 py-1 rounded-md border border-accent/20">Módulo 4</span>
+            <h2 class="text-xl font-bold text-gray-800 mt-1">Monosacáridos de Alta Relevancia Fisiológica</h2>
+          </div>
+          <span class="text-xs bg-slate-100 text-gray-600 font-semibold px-3 py-1.5 rounded-xl border border-gray-200">
+            Cuadrante Biomédico Integrado
+          </span>
+        </div>
+        <p class="text-xs text-gray-500 leading-relaxed">
+          Análisis comparativo de las propiedades estructurales, mecanismos de transporte a través de membranas biológicas y destinos metabólicos de la D-glucosa, D-galactosa, D-fructosa y las pentosas de los ácidos nucleicos (D-ribosa y 2-desoxi-D-ribosa).
+        </p>
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+        <div class="border-b border-gray-100 pb-3">
+          <h3 class="text-sm font-bold text-gray-800 uppercase tracking-wider">Cuadrante Comparativo de Monosacáridos Fisiológicos</h3>
+        </div>
+
+        <!-- 4 Grid Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Card 1: D-Glucosa -->
+          <div class="p-6 rounded-2xl bg-white border-2 border-blue-200/80 hover:border-blue-500 transition-all shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-blue-50 text-accent border border-blue-200">
+                  Aldohexosa Piranósica
+                </span>
+                <span class="text-xs font-mono font-bold text-slate-400">$\text{C}_6\text{H}_{12}\text{O}_6$</span>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                <i class="fa-solid fa-heart-pulse text-blue-600"></i> D-Glucosa (Dextrosa)
+              </h3>
+              <p class="text-xs text-gray-500 mt-2 leading-relaxed">
+                El sustrato oxidativo primordial para el cerebro y la médula renal; indispensable para los eritrocitos (carentes de mitocondrias, dependientes de glucólisis anaeróbica).
+              </p>
+              
+              <div class="mt-4 space-y-2 text-xs">
+                <div class="p-2.5 bg-gray-50 rounded-lg border border-gray-200">
+                  <strong class="text-gray-700">Homeostasia y Concentración Plasmática:</strong>
+                  <div class="text-gray-500">Normoglucemia en ayunas: $70 - 99\,\text{mg/dL}$. Regulada por la relación hormonal insulina/glucagón.</div>
+                </div>
+                <div class="p-2.5 bg-gray-50 rounded-lg border border-gray-200">
+                  <strong class="text-gray-700">Transporte Celular:</strong>
+                  <div class="text-gray-500">$\text{SGLT1/2}$ (transporte activo secundario acoplado a $\text{Na}^+$ en enterocito y túbulo proximal renal) y $\text{GLUT1-4}$ (difusión facilitada).</div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-gray-100 text-[11px] font-mono text-blue-700">
+              Rotación específica en equilibrio: $[\alpha]_D = +52.7^\circ$
+            </div>
+          </div>
+
+          <!-- Card 2: D-Galactosa -->
+          <div class="p-6 rounded-2xl bg-white border-2 border-emerald-200/80 hover:border-emerald-500 transition-all shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200">
+                  Epímero en $\text{C}4$
+                </span>
+                <span class="text-xs font-mono font-bold text-slate-400">$\text{C}_6\text{H}_{12}\text{O}_6$</span>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                <i class="fa-solid fa-brain text-emerald-600"></i> D-Galactosa
+              </h3>
+              <p class="text-xs text-gray-500 mt-2 leading-relaxed">
+                Obtenida por hidrólisis intestinal de la lactosa láctea. Crucial para la síntesis de macromoléculas de mielina y glucolípidos neurales.
+              </p>
+              
+              <div class="mt-4 space-y-2 text-xs">
+                <div class="p-2.5 bg-gray-50 rounded-lg border border-gray-200">
+                  <strong class="text-gray-700">Metabolismo Hepático (Vía de Leloir):</strong>
+                  <div class="text-gray-500">Fosforilada por galactoquinasa a Galactosa-1-$\text{P}$, convertida en $\text{UDP}$-Glucosa por la enzima $\text{GALT}$.</div>
+                </div>
+                <div class="p-2.5 bg-rose-50 rounded-lg border border-rose-200 text-rose-900">
+                  <strong class="text-rose-950">Correlación Clínica: Galactosemia Clásica:</strong>
+                  <div class="text-xs">Déficit de $\text{GALT}$. La acumulación de galactitol por la aldosa reductasa produce cataratas neonatales tempranas y daño hepatorrenal grave.</div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-gray-100 text-[11px] font-mono text-emerald-700">
+              Rotación específica en equilibrio: $[\alpha]_D = +80.2^\circ$
+            </div>
+          </div>
+
+          <!-- Card 3: D-Fructosa -->
+          <div class="p-6 rounded-2xl bg-white border-2 border-amber-200/80 hover:border-amber-500 transition-all shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-amber-50 text-amber-700 border border-amber-200">
+                  Cetohexosa Furanósica
+                </span>
+                <span class="text-xs font-mono font-bold text-slate-400">$\text{C}_6\text{H}_{12}\text{O}_6$</span>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                <i class="fa-solid fa-lemon text-amber-500"></i> D-Fructosa (Levulosa)
+              </h3>
+              <p class="text-xs text-gray-500 mt-2 leading-relaxed">
+                El glúcido más dulce natural. Presente en frutas y miel, o como componente de la sacarosa y jarabes de alta fructosa ($\text{JMAF}$).
+              </p>
+              
+              <div class="mt-4 space-y-2 text-xs">
+                <div class="p-2.5 bg-gray-50 rounded-lg border border-gray-200">
+                  <strong class="text-gray-700">Metabolismo Independiente de Insulina:</strong>
+                  <div class="text-gray-500">Ingresa por el transportador $\text{GLUT5}$. En el hígado es fosforilada por fructoquinasa a Fructosa-1-$\text{P}$, eludiendo el paso regulatorio clave de la fosfofructoquinasa-1 ($\text{PFK-1}$).</div>
+                </div>
+                <div class="p-2.5 bg-amber-50 rounded-lg border border-amber-200 text-amber-900">
+                  <strong class="text-amber-950">Impacto Metabólico en Medicina:</strong>
+                  <div class="text-xs">El ingreso hepático masivo sin control por $\text{PFK-1}$ estimula potentemente la lipogénesis <em>de novo</em>, favoreciendo hígado graso no alcohólico ($\text{EHNA}$) e hipertrigliceridemia.</div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-gray-100 text-[11px] font-mono text-amber-800">
+              Rotación específica en equilibrio: $[\alpha]_D = -92.4^\circ$ (Levógira)
+            </div>
+          </div>
+
+          <!-- Card 4: D-Ribosa vs 2-Desoxi-D-Ribosa -->
+          <div class="p-6 rounded-2xl bg-white border-2 border-indigo-200/80 hover:border-indigo-500 transition-all shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-indigo-50 text-indigo-700 border border-indigo-200">
+                  Aldopentosas Furanósicas
+                </span>
+                <span class="text-xs font-mono font-bold text-slate-400">$\text{C}_5\text{H}_{10}\text{O}_5$ vs $\text{C}_5\text{H}_{10}\text{O}_4$</span>
+              </div>
+              <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                <i class="fa-solid fa-dna text-indigo-600"></i> D-Ribosa vs. 2-Desoxi-D-Ribosa
+              </h3>
+              <p class="text-xs text-gray-500 mt-2 leading-relaxed">
+                Eje estructural del dogma central de la biología molecular y del intercambio energético celular.
+              </p>
+              
+              <div class="mt-4 space-y-2 text-xs">
+                <div class="p-2.5 bg-gray-50 rounded-lg border border-gray-200">
+                  <strong class="text-gray-700">D-Ribosa:</strong>
+                  <div class="text-gray-500">Posee grupo hidroxilo $-\text{OH}$ en $\text{C}2$. Forma el esqueleto del $\text{ARN}$ y coenzimas vitales: $\text{ATP}$, $\text{NAD}^+$, $\text{FAD}$, $\text{CoA}$.</div>
+                </div>
+                <div class="p-2.5 bg-gray-50 rounded-lg border border-gray-200">
+                  <strong class="text-indigo-900">2-Desoxi-D-Ribosa:</strong>
+                  <div class="text-gray-500">Carece de átomo de oxígeno en $\text{C}2$ (sustituido por $-\text{H}$). La ausencia del $-\text{OH}$ en $\text{C}2$ confiere al $\text{ADN}$ una resistencia hidrolítica drásticamente mayor frente a la escisión nucleofílica alcalina, protegiendo la información genética a lo largo de las generaciones celulares.</div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-gray-100 text-[11px] font-mono text-indigo-700">
+              Vía metabólica de síntesis: Vía de las Pentosas Fosfato
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- MODULE 5: ENLACE O-GLUCOSÍDICO Y DISACÁRIDOS -->
+    <!-- ========================================== -->
+    <section id="module-mod5" class="module-section hidden space-y-8">
+      
+      <!-- Naturaleza del Enlace Glucosídico -->
+      <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-200">
+        <div class="max-w-3xl mb-6">
+          <span class="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-1 rounded border border-amber-200">
+            Química Covalente de Condensación
+          </span>
+          <h2 class="text-2xl font-bold text-gray-800 mt-2">
+            El Enlace $O$-Glucosídico y Poder Reductor
+          </h2>
+          <p class="text-sm text-gray-500 mt-2 leading-relaxed">
+            Se establece cuando el grupo hidroxilo ($-\text{OH}$) anomérico de un monosacárido reacciona con un grupo $-\text{OH}$ de otro glúcido, con eliminación de una molécula de agua ($\text{H}_2\text{O}$).
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-5 rounded-xl bg-gray-50 border border-gray-200 text-xs text-gray-600 space-y-2">
+            <h4 class="font-bold text-gray-800 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-lock text-accent"></i> Bloqueo de la Mutarrotación
+            </h4>
+            <p>
+              El carbono anomérico participante se transforma de un <em>hemiacetal</em> a un <strong>acetal pleno</strong>. En consecuencia, queda "bloqueado": no puede abrir su anillo espontáneamente en solución acuosa ni sufrir mutarrotación.
+            </p>
+            <p>
+              Si el segundo monosacárido conserva su propio carbono anomérico libre, el disacárido mantendrá su <strong>carácter reductor</strong> (reactivo de Benedict / Fehling positivo).
+            </p>
+          </div>
+
+          <div class="p-5 rounded-xl bg-gray-50 border border-gray-200 text-xs text-gray-600 space-y-2">
+            <h4 class="font-bold text-gray-800 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-ban text-rose-500"></i> Enlace Dicarbonílico (No Reductor)
+            </h4>
+            <p>
+              Ocurre cuando el enlace se establece entre los <strong>dos carbonos anoméricos</strong> de ambos monosacáridos (como sucede en la sacarosa: anomérico $\text{C}1$ con anomérico $\text{C}2$).
+            </p>
+            <p class="font-semibold text-rose-900">
+              No queda ningún grupo hemiacetálico libre: la molécula es estrictamente NO reductora y no mutarrota.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISOR DINÁMICO DE DISACÁRIDOS FISIOLÓGICOS -->
+      <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-200">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-6 border-b border-gray-100 gap-3">
+          <div>
+            <h3 class="text-xl font-bold text-gray-800">
+              Disacáridos Clave en la Nutrición Humana y Digestión
+            </h3>
+            <p class="text-xs text-slate-500">Selecciona el disacárido para examinar su fórmula Haworth, enlace covalente y cinética digestiva.</p>
+          </div>
+
+          <!-- Disaccharide Selector Tabs -->
+          <div class="flex items-center gap-1.5 bg-slate-100 p-1.5 rounded-xl text-xs font-medium">
+            <button onclick="setDisaccharide('maltose')" id="btn-disac-malt" class="px-3.5 py-1.5 rounded-lg bg-accent text-white shadow transition-all">
+              Maltosa
+            </button>
+            <button onclick="setDisaccharide('lactose')" id="btn-disac-lact" class="px-3.5 py-1.5 rounded-lg text-gray-600 hover:bg-white transition-all">
+              Lactosa
+            </button>
+            <button onclick="setDisaccharide('sucrose')" id="btn-disac-sucr" class="px-3.5 py-1.5 rounded-lg text-gray-600 hover:bg-white transition-all">
+              Sacarosa
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <!-- Visual Disaccharide Diagram (SVG) -->
+          <div class="lg:col-span-6 bg-gray-50 p-6 rounded-xl border border-gray-200 flex flex-col items-center justify-center">
+            <svg id="disaccharide-svg" width="380" height="200" viewBox="0 0 380 200" class="w-full h-auto select-none"></svg>
+            <div id="disaccharide-link-badge" class="mt-4 px-3 py-1 rounded-full text-xs font-mono font-bold bg-blue-100 text-blue-900 border border-blue-200">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Clinical & Enzymatic Description Card -->
+          <div class="lg:col-span-6 space-y-4">
+            <div id="disaccharide-info-card" class="p-6 rounded-xl border border-gray-200 bg-white space-y-3">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Oficial Institucional -->
+  <footer class="bg-white border-t border-gray-200 py-4 mt-8 text-center text-xs text-gray-500">
+    Desarrollado por vesalio - Todos los derechos reservados
+  </footer>
+
+  <!-- Modal Tutorial / Guía de Uso -->
+  <div id="tutorial-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto custom-scroll">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-accent"></span>
+          <h3 class="text-base font-bold text-gray-800 uppercase tracking-wide">Guía de Uso del Simulador</h3>
+        </div>
+        <button onclick="closeTutorial()" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+      </div>
+      
+      <div class="space-y-4 text-xs text-gray-600 leading-relaxed">
+        <div class="bg-accent-light p-3.5 rounded-xl border border-accent/20">
+          <span class="font-bold text-accent text-xs block mb-1">Propósito Pedagógico (Curso de Ingreso a Medicina - UCCuyo):</span>
+          Este simulador interactivo entrena al aspirante médico en los cinco pilares químicos y biomédicos de los carbohidratos requeridos para el examen de ingreso: la definición rigurosa de Wolfe, la estereoisomería espacial con proyecciones de Fischer, la simulación física del polarímetro y actividad óptica, la termodinámica de ciclación en Haworth con cinética de mutarrotación hacia el equilibrio, y la bioquímica de monosacáridos y disacáridos de trascendencia nutricional y patológica.
+        </div>
+
+        <div>
+          <h4 class="font-bold text-gray-800 text-sm mb-1 text-accent">1. Módulo 1: Fundamentos y Clasificación General</h4>
+          <ul class="list-disc list-inside space-y-1 ml-1 text-gray-600">
+            <li><strong>Definición Química (Wolfe & Lehninger):</strong> Comprenda los carbohidratos como polihidroxialdehídos o polihidroxicetonas (o sustancias que los liberan por hidrólisis).</li>
+            <li><strong>Clasificación por Complejidad:</strong> Monosacáridos (1 unidad no hidrolizable), oligosacáridos (2 a 10 unidades, ej. maltosa, sacarosa, lactosa y antígenos AB0) y polisacáridos (>10 unidades, ej. glucógeno hepático/muscular, almidón y celulosa).</li>
+            <li><strong>Clasificación Funcional y Longitud:</strong> Aldosas con carbonilo terminal en $\text{C}1$ vs. Cetosas con carbonilo interno en $\text{C}2$. Triosas (gliceraldehído y dihidroxiacetona en glucólisis), pentosas (D-ribosa y 2-desoxi-D-ribosa) y hexosas (glucosa, galactosa, fructosa).</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-gray-800 text-sm mb-1 text-accent">2. Módulo 2: Estereoquímica, Actividad Óptica y Proyecciones de Fischer</h4>
+          <ul class="list-disc list-inside space-y-1 ml-1 text-gray-600">
+            <li><strong>Carbono Quiral y Regla de van 't Hoff:</strong> Identificación del átomo asimétrico tetraédrico ($sp^3$) con cuatro sustituyentes diferentes ($2^n$ isómeros).</li>
+            <li><strong>Serie D y L:</strong> Orientación del $-\text{OH}$ en el carbono quiral más alejado del carbonilo (derecha = D; izquierda = L). Estereoespecificidad humana absoluta por la serie D (la L-glucosa es inerte).</li>
+            <li><strong>Enantiómeros, Diastereoisómeros y Epímeros:</strong> Comparador interactivo en Fischer de D-glucosa frente a D-galactosa (epímeros en $\text{C}4$) y L-glucosa (enantiómero especular).</li>
+            <li><strong>Laboratorio Virtual del Polarímetro:</strong> Simulación del banco óptico con haz de sodio ($589\,\text{nm}$), prisma polarizador Nicol, tubo de muestra de $1\,\text{dm}$ y analizador rotatorio. Mueva el control de ángulo $\alpha$ de $-120^\circ$ a $+120^\circ$ o pulse <em>«Calibrar a Máxima Transmisión»</em> para identificar sustancias dextrógiras $(+)$ y levógiras $(-)$.</li>
+            <li><strong>Alerta Conceptual de Examen:</strong> Diferencie rigurosamente la configuración estructural estática (D/L) del signo experimental de rotación óptica ($+$/$-$). Ejemplo: D-(+)-glucosa ("dextrosa") vs. D-(-)-fructosa ("levulosa").</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-gray-800 text-sm mb-1 text-accent">3. Módulo 3: Ciclación Intramolecular, Proyecciones de Haworth y Mutarrotación</h4>
+          <ul class="list-disc list-inside space-y-1 ml-1 text-gray-600">
+            <li><strong>Termodinámica Acuosa:</strong> Adición nucleofílica intramolecular del $-\text{OH}$ de $\text{C}5$ sobre el carbonilo en $\text{C}1$ ($>99\%$ en formas cíclicas). Anillos de 6 miembros (piranosas) y 5 miembros (furanosas).</li>
+            <li><strong>Carbono Anomérico y Regla de Haworth:</strong> Anómero $\alpha$ ($-\text{OH}$ hacia ABAJO) vs. Anómero $\beta$ ($-\text{OH}$ hacia ARRIBA).</li>
+            <li><strong>Simulador Cinético de Mutarrotación:</strong> Presione <em>«Iniciar desde $\alpha$»</em> o <em>«Iniciar desde $\beta$»</em> para observar la evolución temporal del ángulo específico $[\alpha]_D$ hasta el equilibrio termodinámico ($+52.7^\circ$, con $\approx 64\%$ de $\beta$ y $\approx 36\%$ de $\alpha$).</li>
+            <li><strong>Relevancia Médica en Glucómetros:</strong> Aplicación de la enzima glucosa oxidasa ($\text{GOD}$) estereoespecífica por la $eta$-D-glucosa en biosensores continuos.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-gray-800 text-sm mb-1 text-accent">4. Módulo 4: Monosacáridos de Alta Relevancia Fisiológica</h4>
+          <ul class="list-disc list-inside space-y-1 ml-1 text-gray-600">
+            <li><strong>D-Glucosa:</strong> Combustible primordial de neuronas y glóbulos rojos; captación por GLUT y glicólisis.</li>
+            <li><strong>D-Galactosa:</strong> Síntesis de lactosa en glándula mamaria y glucolípidos de mielina; epimerización hepática por UDP-galactosa 4-epimerasa.</li>
+            <li><strong>D-Fructosa:</strong> Captación por GLUT5 y fosforilación por fructoquinasa hepática; elude el punto de control de la fosfofructoquinasa-1 (PFK-1), estimulando la lipogénesis <em>de novo</em> y esteatosis hepática.</li>
+            <li><strong>D-Ribosa vs. 2-Desoxi-D-Ribosa:</strong> Rol estructural en ARN y ADN; estabilidad molecular aumentada en el ADN por ausencia de oxígeno en $\text{C}2$.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-gray-800 text-sm mb-1 text-accent">5. Módulo 5: Enlace O-Glucosídico y Disacáridos Fisiológicos</h4>
+          <ul class="list-disc list-inside space-y-1 ml-1 text-gray-600">
+            <li><strong>Química Covalente del Enlace:</strong> Condensación con pérdida de $\text{H}_2\text{O}$ entre un $-\text{OH}$ anomérico y otro alcohol, bloqueando la mutarrotación del residuo acetálico.</li>
+            <li><strong>Poder Reductor:</strong> Distinción entre enlaces monocarbonílicos (conservan un hemiacetal libre, reactivo de Benedict positivo) y dicarbonílicos no reductores.</li>
+            <li><strong>Visor Dinámico de Disacáridos:</strong> Explore las estructuras en Haworth de:
+              <ul class="list-disc list-inside ml-4 space-y-0.5 text-gray-500">
+                <li><em>Maltosa:</em> $\alpha$-D-glucopiranosil-($1\to 4$)-D-glucopiranosa [$\alpha(1\to 4)$], reductora, producto de amilasas.</li>
+                <li><em>Lactosa:</em> $\beta$-D-galactopiranosil-($1\to 4$)-D-glucopiranosa [$\beta(1\to 4)$], reductora, azúcar lácteo hidrolizado por lactasa.</li>
+                <li><em>Sacarosa:</em> $\alpha$-D-glucopiranosil-($1\to 2$)-$\beta$-D-fructofuranósido [$\alpha 1 \leftrightarrow \beta 2$], no reductora (enlace dicarbonílico).</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t flex justify-end">
+        <button onclick="closeTutorial()" class="px-5 py-2 bg-accent text-white text-xs font-semibold rounded-xl hover:bg-accent-hover transition shadow-sm">
+          Entendido
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pie de Página Institucional Obligatorio -->
+  <footer class="bg-white border-t border-gray-200 py-4 mt-8 text-center text-xs text-gray-500">
+    Desarrollado por vesalio - Todos los derechos reservados
+  </footer>
+<script>
+    function openTutorial() {
+      document.getElementById('tutorial-modal').classList.remove('hidden');
+      renderKaTeX();
+    }
+
+    function closeTutorial() {
+      document.getElementById('tutorial-modal').classList.add('hidden');
+    }
+
+    function renderKaTeX() {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false }
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    // ==========================================
+    // TAB MANAGEMENT
+    // ==========================================
+    function switchTab(tabId) {
+      document.querySelectorAll('.module-section').forEach(el => el.classList.add('hidden'));
+      const activeSec = document.getElementById(`module-${tabId}`);
+      if (activeSec) activeSec.classList.remove('hidden');
+
+      const tabs = ['mod1', 'mod2', 'mod3', 'mod4', 'mod5'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`nav-${t}`);
+        if (btn) {
+          if (t === tabId) {
+            btn.className = "tab-btn bg-accent text-white flex-1 lg:flex-none text-left py-2.5 px-3.5 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center gap-2.5 shadow-sm";
+          } else {
+            btn.className = "tab-btn text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-3.5 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-2.5";
+          }
+        }
+      });
+
+      renderKaTeX();
+    }
+
+    // ==========================================
+    // MODULE 2: FISCHER VISUALIZER & EPIMERS ENGINE
+    // ==========================================
+    const fischerData = {
+      glucose: {
+        name: "D-Glucosa",
+        formula: "Aldohexosa ($\text{C}_6\text{H}_{12}\text{O}_6$)",
+        series: "Serie D ($-\text{OH}$ en $\text{C}5$ a la DERECHA)",
+        c4status: "Derecha",
+        c4class: "text-gray-600",
+        clinical: "La aldohexosa central de la biología humana. Todos los transportadores neuronales $\\text{GLUT3}$ y eritrocitarios $\\text{GLUT1}$ están finamente sintonizados para este estereoisómero específico.",
+        chiralCenters: [
+          { c: 2, left: "H", right: "OH" },
+          { c: 3, left: "OH", right: "H" },
+          { c: 4, left: "H", right: "OH" }, // C4 right
+          { c: 5, left: "H", right: "OH" }  // C5 right (Series D)
+        ]
+      },
+      galactose: {
+        name: "D-Galactosa (Epímero en C4)",
+        formula: "Aldohexosa ($\text{C}_6\text{H}_{12}\text{O}_6$)",
+        series: "Serie D ($-\text{OH}$ en $\text{C}5$ a la DERECHA)",
+        c4status: "Invertido (IZQUIERDA)",
+        c4class: "text-amber-600 font-bold",
+        clinical: "Epímero de la glucosa en $\\text{C}4$. Para entrar a la glucólisis, debe ser convertida por la enzima hepatocitaria $\\text{UDP-glucosa 4-epimerasa}$. Su incapacidad genética de metabolización causa Galactosemia neonatal.",
+        chiralCenters: [
+          { c: 2, left: "H", right: "OH" },
+          { c: 3, left: "OH", right: "H" },
+          { c: 4, left: "OH", right: "H" }, // C4 inverted to Left!
+          { c: 5, left: "H", right: "OH" }  // C5 right (Series D)
+        ]
+      },
+      lglucose: {
+        name: "L-Glucosa (Enantiómero)",
+        formula: "Aldohexosa ($\text{C}_6\text{H}_{12}\text{O}_6$)",
+        series: "Serie L ($-\text{OH}$ en $\text{C}5$ a la IZQUIERDA)",
+        c4status: "Invertido (IZQUIERDA)",
+        c4class: "text-rose-600",
+        clinical: "Imagen especular no superponible completa de la D-glucosa (inversión en $\\text{C}2, \\text{C}3, \\text{C}4, \\text{C}5$). Los receptores gustativos linguales la perciben dulce, pero las enzimas hexoquinasas son incapaces de fosforilarla. Inútil biológicamente.",
+        chiralCenters: [
+          { c: 2, left: "OH", right: "H" },
+          { c: 3, left: "H", right: "OH" },
+          { c: 4, left: "OH", right: "H" },
+          { c: 5, left: "OH", right: "H" }  // C5 left (Series L)
+        ]
+      }
+    };
+
+    function renderFischer(moleculeKey) {
+      const data = fischerData[moleculeKey];
+      const svg = document.getElementById("fischer-svg");
+      svg.innerHTML = "";
+
+      const cx = 140; // Center X
+      const topY = 40;
+      const bottomY = 340;
+      const stepY = 50;
+
+      // Vertical Backbone line
+      const backbone = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      backbone.setAttribute("x1", cx);
+      backbone.setAttribute("y1", topY + 15);
+      backbone.setAttribute("x2", cx);
+      backbone.setAttribute("y2", bottomY - 15);
+      backbone.setAttribute("class", "fischer-bond");
+      svg.appendChild(backbone);
+
+      // C1 (Top CHO)
+      const c1Text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      c1Text.setAttribute("x", cx);
+      c1Text.setAttribute("y", topY + 10);
+      c1Text.setAttribute("text-anchor", "middle");
+      c1Text.setAttribute("fill", "#0c2340");
+      c1Text.setAttribute("font-weight", "bold");
+      c1Text.setAttribute("font-size", "17");
+      c1Text.textContent = "CHO (C1)";
+      svg.appendChild(c1Text);
+
+      // C6 (Bottom CH2OH)
+      const c6Text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      c6Text.setAttribute("x", cx);
+      c6Text.setAttribute("y", bottomY + 15);
+      c6Text.setAttribute("text-anchor", "middle");
+      c6Text.setAttribute("fill", "#0c2340");
+      c6Text.setAttribute("font-weight", "bold");
+      c6Text.setAttribute("font-size", "16");
+      c6Text.textContent = "CH₂OH (C6)";
+      svg.appendChild(c6Text);
+
+      // Chiral Carbons C2 to C5
+      data.chiralCenters.forEach((center, idx) => {
+        const y = topY + (idx + 1) * stepY + 15;
+        const isC4 = center.c === 4;
+        const isC5 = center.c === 5;
+
+        // Horizontal Bond
+        const hBond = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        hBond.setAttribute("x1", cx - 75);
+        hBond.setAttribute("y1", y);
+        hBond.setAttribute("x2", cx + 75);
+        hBond.setAttribute("y2", y);
+        hBond.setAttribute("stroke", isC4 ? "#d97706" : (isC5 ? "#2563eb" : "#475569"));
+        hBond.setAttribute("stroke-width", isC4 || isC5 ? "3.5" : "2.5");
+        svg.appendChild(hBond);
+
+        // Carbon Center Node
+        const cNode = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        cNode.setAttribute("cx", cx);
+        cNode.setAttribute("cy", y);
+        cNode.setAttribute("r", isC4 || isC5 ? "7" : "5");
+        cNode.setAttribute("fill", isC4 ? "#f59e0b" : (isC5 ? "#3b82f6" : "#64748b"));
+        svg.appendChild(cNode);
+
+        // Carbon label
+        const cLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        cLabel.setAttribute("x", cx + 12);
+        cLabel.setAttribute("y", y - 6);
+        cLabel.setAttribute("font-size", "10");
+        cLabel.setAttribute("fill", "#64748b");
+        cLabel.setAttribute("font-family", "monospace");
+        cLabel.textContent = `C${center.c}*`;
+        svg.appendChild(cLabel);
+
+        // Left Substituent
+        const leftText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        leftText.setAttribute("x", cx - 85);
+        leftText.setAttribute("y", y + 5);
+        leftText.setAttribute("text-anchor", "end");
+        leftText.setAttribute("font-size", "15");
+        leftText.setAttribute("font-weight", center.left === "OH" ? "bold" : "normal");
+        leftText.setAttribute("fill", center.left === "OH" ? (isC4 ? "#b45309" : (isC5 ? "#1d4ed8" : "#0f172a")) : "#475569");
+        leftText.textContent = center.left;
+        svg.appendChild(leftText);
+
+        // Right Substituent
+        const rightText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        rightText.setAttribute("x", cx + 85);
+        rightText.setAttribute("y", y + 5);
+        rightText.setAttribute("text-anchor", "start");
+        rightText.setAttribute("font-size", "15");
+        rightText.setAttribute("font-weight", center.right === "OH" ? "bold" : "normal");
+        rightText.setAttribute("fill", center.right === "OH" ? (isC4 ? "#b45309" : (isC5 ? "#1d4ed8" : "#0f172a")) : "#475569");
+        rightText.textContent = center.right;
+        svg.appendChild(rightText);
+      });
+
+      // Update Analysis Card
+      const card = document.getElementById("fischer-analysis-card");
+      card.innerHTML = `
+        <div class="flex items-center justify-between border-b border-gray-100 pb-3 mb-3">
+          <h4 class="text-base font-bold text-gray-800">${data.name}</h4>
+          <span class="text-xs px-2.5 py-1 rounded bg-slate-100 font-mono text-gray-600">${data.formula}</span>
+        </div>
+        <div class="space-y-2 text-xs text-gray-500">
+          <div class="flex justify-between p-2 bg-gray-50 rounded">
+            <span class="font-medium text-gray-600">Determinación de Serie (Carbono Asimétrico C5):</span>
+            <span class="font-bold text-blue-700">${data.series}</span>
+          </div>
+          <div class="flex justify-between p-2 bg-gray-50 rounded">
+            <span class="font-medium text-gray-600">Configuración en Carbono 4 (C4):</span>
+            <span class="${data.c4class}">-OH hacia ${data.c4status}</span>
+          </div>
+          <div class="p-3 bg-blue-50/50 rounded-lg border border-blue-100 text-gray-600 leading-relaxed mt-2">
+            <strong class="text-accent">Relevancia Fisiológica:</strong> ${data.clinical}
+          </div>
+        </div>
+      `;
+
+      renderKaTeX();
+    }
+
+    function setFischerMolecule(type) {
+      ['btn-fischer-glu', 'btn-fischer-gal', 'btn-fischer-lglu'].forEach(id => {
+        const btn = document.getElementById(id);
+        btn.classList.remove('bg-accent', 'text-white', 'shadow');
+        btn.classList.add('text-gray-600');
+      });
+
+      if (type === 'glucose') {
+        document.getElementById('btn-fischer-glu').classList.add('bg-accent', 'text-white', 'shadow');
+      } else if (type === 'galactose') {
+        document.getElementById('btn-fischer-gal').classList.add('bg-accent', 'text-white', 'shadow');
+      } else {
+        document.getElementById('btn-fischer-lglu').classList.add('bg-accent', 'text-white', 'shadow');
+      }
+      renderFischer(type);
+    }
+
+    // ==========================================
+    // MODULE 2: POLARIMETER SIMULATION ENGINE
+    // ==========================================
+    const polarimeterSamples = {
+      'd-glucose': { name: "D-(+)-Glucosa (Dextrosa)", angle: 52.7, type: "Dextrógira (+)", desc: "En solución acuosa en equilibrio mutarrotacional, desvía el plano hacia la derecha (sentido horario)." },
+      'd-fructose': { name: "D-(-)-Fructosa (Levulosa)", angle: -92.4, type: "Levógira (-)", desc: "A pesar de ser de la Serie D de Fischer, desvía potentemente la luz hacia la izquierda (antihorario)." },
+      'sucrose': { name: "Sacarosa", angle: 66.5, type: "Dextrógira (+)", desc: "Disacárido natural dextrógiro. Al hidrolizarse enzimáticamente en intestino da 'azúcar invertido'." },
+      'invert-sugar': { name: "Azúcar Invertido (Glucosa + Fructosa eq)", angle: -19.7, type: "Levógira (-)", desc: "La rotación de la fructosa (-92.4°) supera a la de la glucosa (+52.7°), invirtiendo el signo global." },
+      'water': { name: "Agua / Solución Aquiral", angle: 0.0, type: "Ópticamente Inactiva", desc: "No posee carbonos asimétricos o es una mezcla racémica equimolecular sin actividad óptica neta." }
+    };
+
+    let currentAnalyzerAngle = 0.0;
+    let targetAngle = 52.7;
+    let selectedSampleKey = 'd-glucose';
+
+    function drawPolarimeterBench() {
+      const svg = document.getElementById("polarimeter-bench-svg");
+      svg.innerHTML = "";
+
+      // Background Track
+      const track = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      track.setAttribute("x1", "20"); track.setAttribute("y1", "120");
+      track.setAttribute("x2", "630"); track.setAttribute("y2", "120");
+      track.setAttribute("stroke", "#334155"); track.setAttribute("stroke-width", "4");
+      svg.appendChild(track);
+
+      // Light Beam line from lamp to polarizer
+      const beam1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      beam1.setAttribute("x1", "80"); beam1.setAttribute("y1", "120");
+      beam1.setAttribute("x2", "190"); beam1.setAttribute("y2", "120");
+      beam1.setAttribute("stroke", "#f59e0b"); beam1.setAttribute("stroke-width", "4");
+      beam1.setAttribute("stroke-dasharray", "3,3");
+      svg.appendChild(beam1);
+
+      // Polarized Beam from polarizer to sample tube
+      const beam2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      beam2.setAttribute("x1", "210"); beam2.setAttribute("y1", "120");
+      beam2.setAttribute("x2", "300"); beam2.setAttribute("y2", "120");
+      beam2.setAttribute("stroke", "#fbbf24"); beam2.setAttribute("stroke-width", "3.5");
+      svg.appendChild(beam2);
+
+      // Sample Tube
+      const tube = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      tube.setAttribute("x", "300"); tube.setAttribute("y", "95");
+      tube.setAttribute("width", "130"); tube.setAttribute("height", "50");
+      tube.setAttribute("rx", "6");
+      tube.setAttribute("fill", "rgba(59, 130, 246, 0.2)");
+      tube.setAttribute("stroke", "#60a5fa"); tube.setAttribute("stroke-width", "2");
+      svg.appendChild(tube);
+
+      // Liquid in tube
+      const liquidText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      liquidText.setAttribute("x", "365"); liquidText.setAttribute("y", "125");
+      liquidText.setAttribute("text-anchor", "middle");
+      liquidText.setAttribute("fill", "#93c5fd");
+      liquidText.setAttribute("font-size", "11");
+      liquidText.setAttribute("font-family", "monospace");
+      liquidText.textContent = "Tubo 10 cm (1 dm)";
+      svg.appendChild(liquidText);
+
+      // Beam from Tube to Analyzer (Rotated plane)
+      const beam3 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      beam3.setAttribute("x1", "430"); beam3.setAttribute("y1", "120");
+      beam3.setAttribute("x2", "500"); beam3.setAttribute("y2", "120");
+      beam3.setAttribute("stroke", "#fde047"); beam3.setAttribute("stroke-width", "3");
+      svg.appendChild(beam3);
+
+      // Lamp Source [1]
+      const lamp = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      lamp.setAttribute("x", "40"); lamp.setAttribute("y", "85");
+      lamp.setAttribute("width", "40"); lamp.setAttribute("height", "70");
+      lamp.setAttribute("rx", "4"); lamp.setAttribute("fill", "#f59e0b");
+      svg.appendChild(lamp);
+
+      // Polarizer Prism [2]
+      const pol = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      pol.setAttribute("cx", "200"); pol.setAttribute("cy", "120"); pol.setAttribute("r", "25");
+      pol.setAttribute("fill", "#1e293b"); pol.setAttribute("stroke", "#38bdf8"); pol.setAttribute("stroke-width", "2.5");
+      svg.appendChild(pol);
+
+      // Polarizer Slit vertical
+      const polSlit = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      polSlit.setAttribute("x1", "200"); polSlit.setAttribute("y1", "100");
+      polSlit.setAttribute("x2", "200"); polSlit.setAttribute("y2", "140");
+      polSlit.setAttribute("stroke", "#38bdf8"); polSlit.setAttribute("stroke-width", "3");
+      svg.appendChild(polSlit);
+
+      // Analyzer Prism [4]
+      const an = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      an.setAttribute("cx", "510"); an.setAttribute("cy", "120"); an.setAttribute("r", "25");
+      an.setAttribute("fill", "#1e293b"); an.setAttribute("stroke", "#f59e0b"); an.setAttribute("stroke-width", "2.5");
+      svg.appendChild(an);
+
+      // Eyepiece Sensor [5]
+      const eye = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      eye.setAttribute("x", "560"); eye.setAttribute("y", "100");
+      eye.setAttribute("width", "40"); eye.setAttribute("height", "40");
+      eye.setAttribute("rx", "8"); eye.setAttribute("fill", "#047857");
+      svg.appendChild(eye);
+    }
+
+    function updatePolarimeterView() {
+      const sample = polarimeterSamples[selectedSampleKey];
+      targetAngle = sample.angle;
+
+      // Calculate optical transmittance according to Malus Law: I = I_0 * cos^2(theta - target)
+      const deltaRad = ((currentAnalyzerAngle - targetAngle) * Math.PI) / 180;
+      const intensity = Math.pow(Math.cos(deltaRad), 2); // 0 (total darkness) to 1 (bright)
+
+      // Eyepiece illumination
+      const eyeCircle = document.getElementById("eyepiece-light-circle");
+      const bgAlpha = Math.max(0.04, intensity * 0.95);
+      eyeCircle.style.backgroundColor = `rgba(251, 191, 36, ${bgAlpha})`;
+
+      // Eyepiece slit rotation
+      const slit = document.getElementById("eyepiece-slit");
+      slit.style.transform = `rotate(${currentAnalyzerAngle}deg)`;
+      slit.style.opacity = Math.max(0.2, intensity);
+
+      // Angle display
+      const angleSign = currentAnalyzerAngle >= 0 ? "+" : "";
+      document.getElementById("analyzer-angle-display").textContent = `${angleSign}${currentAnalyzerAngle.toFixed(1)}°`;
+
+      // Diagnostic assessment
+      const diag = document.getElementById("polarimeter-diagnostics");
+      const isAligned = Math.abs(currentAnalyzerAngle - targetAngle) < 1.0;
+
+      diag.innerHTML = `
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-gray-500 font-semibold">Muestra:</span>
+          <span class="font-bold text-gray-800">${sample.name}</span>
+        </div>
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-gray-500 font-semibold">Rotación Real $[\alpha]_D$:</span>
+          <span class="font-mono text-accent font-bold">${sample.angle >= 0 ? '+' : ''}${sample.angle}° (${sample.type})</span>
+        </div>
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-gray-500 font-semibold">Estado de Lectura:</span>
+          <span class="${isAligned ? 'text-emerald-700 font-bold' : 'text-gray-500'}">
+            ${isAligned ? '✓ ¡Máxima Iluminación / Lectura Precisa!' : 'Fuera de ángulo'}
+          </span>
+        </div>
+        <div class="mt-2 pt-2 border-t border-gray-100 text-[11px] text-gray-600 leading-relaxed">
+          ${sample.desc}
+        </div>
+      `;
+    }
+
+    function updateAnalyzerAngle(val) {
+      currentAnalyzerAngle = parseFloat(val);
+      updatePolarimeterView();
+    }
+
+    function changePolarimeterSample(key) {
+      selectedSampleKey = key;
+      updatePolarimeterView();
+    }
+
+    function autoZeroPolarimeter() {
+      const sample = polarimeterSamples[selectedSampleKey];
+      currentAnalyzerAngle = sample.angle;
+      document.getElementById("analyzer-slider").value = sample.angle;
+      updatePolarimeterView();
+    }
+
+    // ==========================================
+    // MODULE 3: MUTAROTATION SIMULATOR ENGINE
+    // ==========================================
+    let mutaInterval = null;
+    let mutaAlphaCurrent = 36.0;
+    let mutaBetaCurrent = 64.0;
+    let mutaTargetAlpha = 36.0;
+    let mutaTargetBeta = 64.0;
+
+    function startMutarotation(fromState) {
+      if (mutaInterval) clearInterval(mutaInterval);
+
+      if (fromState === 'alpha') {
+        mutaAlphaCurrent = 100.0;
+        mutaBetaCurrent = 0.0;
+      } else {
+        mutaAlphaCurrent = 0.0;
+        mutaBetaCurrent = 100.0;
+      }
+
+      mutaTargetAlpha = 36.0;
+      mutaTargetBeta = 64.0;
+
+      mutaInterval = setInterval(() => {
+        // Stepwise convergence to equilibrium
+        const step = 2.0;
+        if (Math.abs(mutaAlphaCurrent - mutaTargetAlpha) > 0.5) {
+          mutaAlphaCurrent += (mutaTargetAlpha > mutaAlphaCurrent) ? step : -step;
+          mutaBetaCurrent = 100.0 - mutaAlphaCurrent;
+        } else {
+          mutaAlphaCurrent = mutaTargetAlpha;
+          mutaBetaCurrent = mutaTargetBeta;
+          clearInterval(mutaInterval);
+        }
+
+        renderMutarotationState();
+      }, 70);
+    }
+
+    function renderMutarotationState() {
+      // Calculate rotation: [alpha] = (%a * 112.2 + %b * 18.7) / 100
+      const rotation = ((mutaAlphaCurrent * 112.2) + (mutaBetaCurrent * 18.7)) / 100;
+      
+      document.getElementById("muta-alpha-pct").textContent = `${mutaAlphaCurrent.toFixed(1)}%`;
+      document.getElementById("muta-beta-pct").textContent = `${mutaBetaCurrent.toFixed(1)}%`;
+
+      document.getElementById("muta-bar-alpha").style.width = `${mutaAlphaCurrent}%`;
+      document.getElementById("muta-bar-beta").style.width = `${mutaBetaCurrent}%`;
+
+      document.getElementById("current-rotation-val").textContent = `+${rotation.toFixed(1)}°`;
+
+      const isEquilibrium = Math.abs(rotation - 52.7) < 0.6;
+      const statusEl = document.getElementById("current-equilibrium-status");
+      if (isEquilibrium) {
+        statusEl.textContent = "(Equilibrio Dinámico Fisiológico)";
+        statusEl.className = "text-xs text-emerald-600 font-semibold ml-2";
+      } else {
+        statusEl.textContent = "(Mutarrotación en Curso...)";
+        statusEl.className = "text-xs text-amber-600 font-semibold ml-2";
+      }
+    }
+
+    // ==========================================
+    // MODULE 5: DISACCHARIDES ENGINE & RENDERER
+    // ==========================================
+    const disaccharideData = {
+      maltose: {
+        name: "Maltosa",
+        systematic: "α-D-glucopiranosil-(1→4)-D-glucopiranosa",
+        bondNotation: "α(1→4)",
+        type: "Monocarbonílico (REDUCTOR)",
+        reducingPower: "Sí (Posee C1 anomérico libre en la segunda glucosa)",
+        clinical: "Producto fundamental de la digestión del almidón vegetal por la α-amilasa salival y pancreática. Es hidrolizada a dos moléculas de D-glucosa por la enzima maltasa del borde en cepillo de los enterocitos en duodeno y yeyuno.",
+        scheme: "glu-alpha14-glu"
+      },
+      lactose: {
+        name: "Lactosa (Azúcar de la Leche)",
+        systematic: "β-D-galactopiranosil-(1→4)-D-glucopiranosa",
+        bondNotation: "β(1→4)",
+        type: "Monocarbonílico (REDUCTOR)",
+        reducingPower: "Sí (Posee C1 anomérico libre en la glucosa terminal)",
+        clinical: "Principal carbohidrato de la leche materna. Escindida por la enzima lactasa (β-galactosidasa). La deficiencia del enzima provoca acumulación osmótica en colon, fermentación bacteriana por microbiota y el cuadro clásico de Intolerancia a la Lactosa (meteorismo, diarrea osmótica, dolor cólico).",
+        scheme: "gal-beta14-glu"
+      },
+      sucrose: {
+        name: "Sacarosa (Azúcar Común de Mesa)",
+        systematic: "α-D-glucopiranosil-(1↔2)-β-D-fructofuranósido",
+        bondNotation: "α1 ↔ β2",
+        type: "Dicarbonílico (ESTRICTAMENTE NO REDUCTOR)",
+        reducingPower: "No (Ambos carbonos anoméricos C1 y C2 están enlazados)",
+        clinical: "Disacárido no reductor formado por glucosa y fructosa. Hidrolizado por la sacarasa-isomaltasa intestinal. Al absorberse, la fructosa viaja al hígado por vía portal, activando vías lipogénicas rápidas independientes de insulina.",
+        scheme: "glu-alpha12-fru"
+      }
+    };
+
+    function renderDisaccharideSVG(scheme) {
+      const svg = document.getElementById("disaccharide-svg");
+      svg.innerHTML = "";
+
+      // Ring 1
+      const r1 = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+      r1.setAttribute("points", "50,110 80,75 140,75 160,110 130,145 70,145");
+      r1.setAttribute("fill", "#dbeafe");
+      r1.setAttribute("stroke", "#1d4ed8");
+      r1.setAttribute("stroke-width", "2.5");
+      svg.appendChild(r1);
+
+      // Label Ring 1
+      const t1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      t1.setAttribute("x", "105"); t1.setAttribute("y", "115");
+      t1.setAttribute("text-anchor", "middle");
+      t1.setAttribute("font-size", "12");
+      t1.setAttribute("font-weight", "bold");
+      t1.setAttribute("fill", "#1e3a8a");
+      t1.textContent = scheme.startsWith("gal") ? "D-Galactosa" : "D-Glucosa";
+      svg.appendChild(t1);
+
+      // Glycosidic Bond Linkage Lines
+      const bridge = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+      if (scheme === "glu-alpha14-glu") {
+        bridge.setAttribute("points", "160,110 190,135 220,110");
+        bridge.setAttribute("stroke", "#d97706");
+      } else if (scheme === "gal-beta14-glu") {
+        bridge.setAttribute("points", "160,110 190,85 220,110");
+        bridge.setAttribute("stroke", "#059669");
+      } else {
+        // alpha1 <-> beta2
+        bridge.setAttribute("points", "160,110 190,110 220,110");
+        bridge.setAttribute("stroke", "#dc2626");
+      }
+      bridge.setAttribute("stroke-width", "3.5");
+      bridge.setAttribute("fill", "none");
+      svg.appendChild(bridge);
+
+      // Oxygen in bridge
+      const oCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      oCircle.setAttribute("cx", "190");
+      oCircle.setAttribute("cy", scheme === "gal-beta14-glu" ? "85" : (scheme === "glu-alpha14-glu" ? "135" : "110"));
+      oCircle.setAttribute("r", "10");
+      oCircle.setAttribute("fill", "#ffffff");
+      oCircle.setAttribute("stroke", "#334155");
+      oCircle.setAttribute("stroke-width", "2");
+      svg.appendChild(oCircle);
+
+      const oText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      oText.setAttribute("x", "190");
+      oText.setAttribute("y", scheme === "gal-beta14-glu" ? "89" : (scheme === "glu-alpha14-glu" ? "139" : "114"));
+      oText.setAttribute("text-anchor", "middle");
+      oText.setAttribute("font-size", "11");
+      oText.setAttribute("font-weight", "bold");
+      oText.setAttribute("fill", "#0f172a");
+      oText.textContent = "O";
+      svg.appendChild(oText);
+
+      // Ring 2
+      const r2 = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+      if (scheme === "glu-alpha12-fru") {
+        // Furanose 5-member ring
+        r2.setAttribute("points", "240,85 285,65 320,95 295,135 245,130");
+        r2.setAttribute("fill", "#fef3c7");
+        r2.setAttribute("stroke", "#d97706");
+      } else {
+        // Pyranose 6-member ring
+        r2.setAttribute("points", "220,110 250,75 310,75 330,110 300,145 240,145");
+        r2.setAttribute("fill", "#ecfdf5");
+        r2.setAttribute("stroke", "#059669");
+      }
+      r2.setAttribute("stroke-width", "2.5");
+      svg.appendChild(r2);
+
+      // Label Ring 2
+      const t2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      t2.setAttribute("x", "280"); t2.setAttribute("y", "115");
+      t2.setAttribute("text-anchor", "middle");
+      t2.setAttribute("font-size", "12");
+      t2.setAttribute("font-weight", "bold");
+      t2.setAttribute("fill", "#065f46");
+      t2.textContent = scheme === "glu-alpha12-fru" ? "D-Fructosa" : "D-Glucosa";
+      svg.appendChild(t2);
+
+      // Free / Blocked Anomeric Status Marker on Ring 2
+      const anomCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      anomCircle.setAttribute("cx", scheme === "glu-alpha12-fru" ? "245" : "330");
+      anomCircle.setAttribute("cy", "110");
+      anomCircle.setAttribute("r", "6");
+      anomCircle.setAttribute("fill", scheme === "glu-alpha12-fru" ? "#ef4444" : "#10b981");
+      svg.appendChild(anomCircle);
+    }
+
+    function setDisaccharide(key) {
+      ['btn-disac-malt', 'btn-disac-lact', 'btn-disac-sucr'].forEach(id => {
+        const btn = document.getElementById(id);
+        btn.classList.remove('bg-accent', 'text-white', 'shadow');
+        btn.classList.add('text-gray-600');
+      });
+
+      if (key === 'maltose') document.getElementById('btn-disac-malt').classList.add('bg-accent', 'text-white', 'shadow');
+      if (key === 'lactose') document.getElementById('btn-disac-lact').classList.add('bg-accent', 'text-white', 'shadow');
+      if (key === 'sucrose') document.getElementById('btn-disac-sucr').classList.add('bg-accent', 'text-white', 'shadow');
+
+      const data = disaccharideData[key];
+      renderDisaccharideSVG(data.scheme);
+
+      document.getElementById("disaccharide-link-badge").textContent = `Enlace O-Glucosídico: ${data.bondNotation}`;
+
+      const card = document.getElementById("disaccharide-info-card");
+      card.innerHTML = `
+        <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+          <h4 class="text-lg font-bold text-gray-800">${data.name}</h4>
+          <span class="text-xs px-2.5 py-1 rounded bg-amber-50 text-amber-700 font-bold border border-amber-200">
+            ${data.type}
+          </span>
+        </div>
+        <div class="text-xs space-y-2 text-gray-500">
+          <p><strong>Nomenclatura Sistemática:</strong> <span class="font-mono text-gray-700">${data.systematic}</span></p>
+          <p><strong>Poder Reductor:</strong> <span class="font-semibold text-gray-700">${data.reducingPower}</span></p>
+          <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 text-gray-600 mt-2 leading-relaxed">
+            <strong class="text-accent">Digestión y Medicina:</strong> ${data.clinical}
+          </div>
+        </div>
+      `;
+
+      renderKaTeX();
+    }
+
+    // ==========================================
+    // INITIALIZATION ON WINDOW LOAD
+    // ==========================================
+    window.onload = function() {
+      renderFischer('glucose');
+      drawPolarimeterBench();
+      updatePolarimeterView();
+      setDisaccharide('maltose');
+      switchTab('mod1');
+      setTimeout(renderKaTeX, 100);
+    };
+  </script>
+</body>
+</html>
